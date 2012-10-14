@@ -142,7 +142,10 @@ public class SudokuBoard {
 		}
 		
 		//Initializing the value for forward Checking
-		this.forwardCheckingSuccess = ForwardCheckingTest();
+		this.forwardCheckingSuccess = true;
+		if (run == 3)
+			this.forwardCheckingSuccess = ForwardCheckingTest();
+		
 		
 	}
 		

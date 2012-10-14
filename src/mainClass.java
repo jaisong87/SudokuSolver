@@ -15,7 +15,7 @@ public class mainClass {
 	 *  3. Backtracking + MRV + Forward Checking
 	 *  4. Backtracking + MRV + Constraint Propagation
 	 */
-	public static int run=2;
+	public static int run=1;
 	
 	
 	
@@ -72,12 +72,11 @@ public class mainClass {
 			else {
 				ArrayList<SudokuBoard> successors = temp.Successor(); 
 				for (SudokuBoard i: successors) {
-					if (run == 3) {
-					 if (i.forwardCheckingSuccess)
+					//forward checking value is always set to true when (run != 3)
+					if (i.forwardCheckingSuccess) 
 					   SBStack.push(i);
-					}
 					else {
-						SBStack.push(i);
+						System.out.println("ForwardChecking failed for a node");
 					}
 				}
 			}
