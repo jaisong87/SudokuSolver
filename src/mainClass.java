@@ -28,7 +28,6 @@ public class mainClass {
 		try {
 
 			String input = reader.readLine();
-			System.out.println(input);
 			
 			
 			String[] sizes = input.split(",");
@@ -45,7 +44,7 @@ public class mainClass {
 
 			SB = new SudokuBoard(inputBoard, BoardSize, M, K, run);	
 			SB.PrintBoard();
-			SB.PrintBoardForDebugging();
+			//SB.PrintBoardForDebugging();
 			
 		} catch (IOException e) {
 			e.printStackTrace();

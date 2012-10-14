@@ -91,6 +91,7 @@ public class SudokuBoard {
 					Rows.get(row).add(SP);
 					Cols.get(col).add(SP);
 					SmallBlocks.get(returnSmallSquareIndex(row, col)).add(SP);
+					queue.add(SP);
 				}
 				else {
 					List<Integer> possibleValues = new ArrayList<Integer>();
@@ -106,7 +107,7 @@ public class SudokuBoard {
 			}
 			row++;
 		}
-		
+	
 		/* 
 		 * Once the board is initialized now it is time to initialize the values of the dataStructure
 		 *  "possibleValues" and "counter" for sudokuPosition objects
@@ -136,6 +137,34 @@ public class SudokuBoard {
 		
 	}
 		
+	
+	/*
+	 * The Successor method returns an ArrayList of Successors.
+	 */
+	public ArrayList<SudokuBoard> Successor() {
+		
+	}
+	
+	/*
+	 * This function is for converting the board configuration back into ArrayList<String>. This method is helping 
+	 * the Successor method 
+	 */
+	
+	public ArrayList<String> convertBoardtoString(int changeRow, int chang) {
+		ArrayList<String> returnList = new ArrayList<String>();
+		for (int row= 0; row < SudokuBoard.size; row++) {
+			String thisRow = "";
+			for (int col= 0; col < SudokuBoard.size; col++) {
+				if (board[row][col].containsValue)
+				  thisRow += board[row][col].value + ",";
+				else
+				  thisRow += "_,";
+			}	
+			returnList.add(thisRow);
+		}
+		return returnList;
+	}
+	
 	
 	/*
 	 * The below functions prints the board
