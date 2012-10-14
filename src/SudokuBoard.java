@@ -135,6 +135,43 @@ public class SudokuBoard {
 		
 	}
 		
+	
+	/*
+	 * The below functions prints the board
+	 */
+	public void PrintBoard(){
+		for (int i=0; i < SudokuBoard.size; i++) {
+			for (int j=0; j < SudokuBoard.size; j++) {
+				sudokuPosition tmp = board[i][j];
+				if (!tmp.containsValue) {
+					System.out.print(tmp.value + ",");
+				}
+				else {
+					System.out.print("_,");
+				}
+			}
+			System.out.println("");
+		}
+	}
+
+	/*
+	 * The below functions is for Debugging
+	 */
+	public void PrintBoardForDebugging(){
+		for (int i=0; i < SudokuBoard.size; i++) {
+			for (int j=0; j < SudokuBoard.size; j++) {
+				sudokuPosition tmp = board[i][j];
+				if (!tmp.containsValue) {
+					System.out.print("{" + tmp.value + "}");
+				}
+				else {
+					System.out.print("{" + tmp.counter + tmp.possibleValues + "}");
+				}
+			}
+			System.out.println("");
+		}
+	}
+	
 	public int CountEmptyPositions(ArrayList<sudokuPosition> temp) {
 		int count = 0;
 		for (sudokuPosition spTemp: temp) {
