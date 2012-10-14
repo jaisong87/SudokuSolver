@@ -68,5 +68,19 @@ public class sudokuPosition {
 			possibleValues.remove(e);
 		}		
 	}
+	
+	@Override
+    public boolean equals(Object arg0) {
+		sudokuPosition obj=(sudokuPosition)arg0;
+		if (obj.x == this.x && obj.y == this.y) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+    public int hashCode() {
+        return x*10 + y;
+    }
 
 }

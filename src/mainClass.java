@@ -32,9 +32,11 @@ public class mainClass {
 			
 			
 			String[] sizes = input.split(",");
-			int BoardSize = Integer.parseInt(sizes[0]);
-			int M = Integer.parseInt(sizes[1]);
-			int K = Integer.parseInt(sizes[2]);
+			int BoardSize = Integer.parseInt(sizes[0].trim());
+			int M = Integer.parseInt(sizes[1].trim());
+			int K = Integer.parseInt(sizes[2].trim());
+
+
 			
 			for(int i=0;i<BoardSize;i++) {
 				input = reader.readLine();

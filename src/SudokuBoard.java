@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 
 public class SudokuBoard {
@@ -161,7 +163,7 @@ public class SudokuBoard {
 		for (int i=0; i < SudokuBoard.size; i++) {
 			for (int j=0; j < SudokuBoard.size; j++) {
 				sudokuPosition tmp = board[i][j];
-				if (!tmp.containsValue) {
+				if (tmp.containsValue) {
 					System.out.print("{" + tmp.value + "}");
 				}
 				else {
@@ -174,6 +176,7 @@ public class SudokuBoard {
 	
 	public int CountEmptyPositions(ArrayList<sudokuPosition> temp) {
 		int count = 0;
+		Set<sudokuPosition> SPSet = new HashSet<sudokuPosition>();
 		for (sudokuPosition spTemp: temp) {
 			if (!spTemp.containsValue) {
 				count++;
@@ -182,7 +185,6 @@ public class SudokuBoard {
 		return count;
 	}
 
-	
 	public void removeValueFrom(ArrayList<sudokuPosition> temp, int val) {
 		for (sudokuPosition spTemp: temp) {
 			spTemp.remove(val);
