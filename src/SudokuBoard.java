@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -43,6 +44,11 @@ public class SudokuBoard {
 	 * intend it to change.
 	 */
 	public static int run;
+	
+	/*
+	 * Forward checking variable
+	 */
+	public boolean forwardCheckingSuccess;
 	
 	/*
 	 * This constructor is used for initialization. Called from 
@@ -135,6 +141,9 @@ public class SudokuBoard {
 			}
 		}
 		
+		//Initializing the value for forward Checking
+		this.forwardCheckingSuccess = ForwardCheckingTest();
+		
 	}
 		
 	
@@ -181,6 +190,27 @@ public class SudokuBoard {
 		}
 		return returnList;
 	}
+	
+	
+	public boolean ForwardCheckingTest() {
+		Iterator<sudokuPosition> myIter = queue.iterator();
+		while (myIter.hasNext()) {
+			if (myIter.next().possibleValues.size() == 0)
+				return false;
+		}
+		return true;
+	}
+	
+	/*
+	 * The goal state function
+	 */
+	public boolean isGoalState() {
+		if (queue.isEmpty())
+			return true;
+		else
+			return false;
+	}
+	
 	
 	
 	/*

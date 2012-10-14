@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class mainClass {
 
@@ -43,11 +44,40 @@ public class mainClass {
 			}
 
 			SB = new SudokuBoard(inputBoard, BoardSize, M, K, run);	
-			SB.PrintBoard();
-			//SB.PrintBoardForDebugging();
-			
+									
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		
+		//The DFS operation starts here:
+		Stack<SudokuBoard> SBStack = new Stack<SudokuBoard>();
+		SBStack.push(SB);
+		int flagPathFound = 0;
+		int popCounter = 0;
+		while(!SBStack.empty()) {
+			SudokuBoard temp = SBStack.pop();
+			popCounter++;
+			if (temp.isGoalState()) {
+				temp.PrintBoard();
+				System.out.println("popCounter=" +popCounter);
+				flagPathFound = 1;
+				System.exit(0);//If you remove this line then all the possible paths will be found 
+			}
+			else {
+				ArrayList<SudokuBoard> successors = temp.Successor(); 
+				for (SudokuBoard i: successors) {
+					if (run == 3) {
+					 if (i.forwardCheckingSuccess)
+					   SBStack.push(i);
+					}
+					else {
+						SBStack.push(i);
+					}
+				}
+			}
+		}
+		if (flagPathFound == 0) {
+			System.out.println("No end state could be found");
 		}
 
 	}
