@@ -15,7 +15,7 @@ public class mainClass {
 	 *  3. Backtracking + MRV + Forward Checking
 	 *  4. Backtracking + MRV + Constraint Propagation
 	 */
-	public static int run=1;
+	public static int run=2;
 	
 	
 	
@@ -49,6 +49,9 @@ public class mainClass {
 			e.printStackTrace();
 		}
 		
+		
+		System.out.println("popCounter=");
+		
 		//The DFS operation starts here:
 		Stack<SudokuBoard> SBStack = new Stack<SudokuBoard>();
 		SBStack.push(SB);
@@ -56,7 +59,10 @@ public class mainClass {
 		int popCounter = 0;
 		while(!SBStack.empty()) {
 			SudokuBoard temp = SBStack.pop();
+			//System.out.println("popCounter=" +popCounter);
 			popCounter++;
+			//temp.PrintBoard();
+			
 			if (temp.isGoalState()) {
 				temp.PrintBoard();
 				System.out.println("popCounter=" +popCounter);
