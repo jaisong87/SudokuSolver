@@ -44,6 +44,7 @@ public class mainClass {
 			}
 
 			SB = new SudokuBoard(inputBoard, BoardSize, M, K, run);	
+			SB.PrintBoard();
 			SB.PrintBoardForDebugging();
 			
 		} catch (IOException e) {

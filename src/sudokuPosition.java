@@ -70,7 +70,7 @@ public class sudokuPosition {
 	}
 	
 	/*
-	 * The equals and Hashcode are for Set Comparison
+	 * The equals and Hashcode are for Set Comparison	
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	

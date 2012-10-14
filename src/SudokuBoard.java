@@ -129,7 +129,7 @@ public class SudokuBoard {
 				sudokuPosition tmp = board[i][j];
 				if (!tmp.containsValue) {
 					tmp.counter = CountEmptyPositions(Rows.get(tmp.x),Cols.get(tmp.y), 
-							SmallBlocks.get(returnSmallSquareIndex(tmp.x, tmp.y))) - 3;
+							SmallBlocks.get(returnSmallSquareIndex(tmp.x, tmp.y))) - 1; //the -1 if for removing self
 				}
 			}
 		}
@@ -144,7 +144,7 @@ public class SudokuBoard {
 		for (int i=0; i < SudokuBoard.size; i++) {
 			for (int j=0; j < SudokuBoard.size; j++) {
 				sudokuPosition tmp = board[i][j];
-				if (!tmp.containsValue) {
+				if (tmp.containsValue) {
 					System.out.print(tmp.value + ",");
 				}
 				else {
@@ -191,6 +191,7 @@ public class SudokuBoard {
 				SPSet.add(spTemp);
 			}
 		}
+		
 		return SPSet.size();
 	}
 
