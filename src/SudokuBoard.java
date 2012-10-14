@@ -45,8 +45,8 @@ public class SudokuBoard {
 	public static int run;
 	
 	/*
-	 * This constructor is used only the first time for initialization. Called from 
-	 * the mainclass.
+	 * This constructor is used for initialization. Called from 
+	 * the mainclass and by the successor function.
 	 */
 	SudokuBoard(ArrayList<String> inputBoard, int BoardSize, int M, int K, int run){		
 
@@ -139,26 +139,43 @@ public class SudokuBoard {
 		
 	
 	/*
+	 * This constructor is used by the Successor function
+	 */
+	SudokuBoard(ArrayList<String> inputBoard){
+		this(inputBoard, SudokuBoard.size, SudokuBoard.M, SudokuBoard.K, SudokuBoard.run);
+	}
+	
+	/*
 	 * The Successor method returns an ArrayList of Successors.
 	 */
 	public ArrayList<SudokuBoard> Successor() {
-		
+		ArrayList<SudokuBoard> successors = new ArrayList<SudokuBoard>();
+		sudokuPosition top = queue.poll();
+		for (int nextPossibleValue: top.possibleValues) {
+			successors.add(new SudokuBoard(convertBoardtoString(top.x, top.y, nextPossibleValue)));
+		}
+		return successors;
 	}
 	
 	/*
 	 * This function is for converting the board configuration back into ArrayList<String>. This method is helping 
-	 * the Successor method 
+	 * the Successor method. The parameters are the ones whose values need to be changed.
 	 */
 	
-	public ArrayList<String> convertBoardtoString(int changeRow, int chang) {
+	public ArrayList<String> convertBoardtoString(int changeRow, int changeCol, int changeVal) {
 		ArrayList<String> returnList = new ArrayList<String>();
 		for (int row= 0; row < SudokuBoard.size; row++) {
 			String thisRow = "";
 			for (int col= 0; col < SudokuBoard.size; col++) {
 				if (board[row][col].containsValue)
 				  thisRow += board[row][col].value + ",";
-				else
-				  thisRow += "_,";
+				else {
+					if (row == changeRow && col == changeCol){
+						thisRow += changeVal + ",";  
+					}else{
+						thisRow += "_,";
+					}
+				}
 			}	
 			returnList.add(thisRow);
 		}
