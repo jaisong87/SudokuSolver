@@ -128,9 +128,8 @@ public class SudokuBoard {
 			for (int j=0; j < SudokuBoard.size; j++) {
 				sudokuPosition tmp = board[i][j];
 				if (!tmp.containsValue) {
-					tmp.counter = CountEmptyPositions(Rows.get(tmp.x)) +
-							CountEmptyPositions(Cols.get(tmp.y)) + 
-					CountEmptyPositions(SmallBlocks.get(returnSmallSquareIndex(tmp.x, tmp.y))) - 3;
+					tmp.counter = CountEmptyPositions(Rows.get(tmp.x),Cols.get(tmp.y), 
+							SmallBlocks.get(returnSmallSquareIndex(tmp.x, tmp.y))) - 3;
 				}
 			}
 		}
@@ -174,15 +173,25 @@ public class SudokuBoard {
 		}
 	}
 	
-	public int CountEmptyPositions(ArrayList<sudokuPosition> temp) {
-		int count = 0;
+	public int CountEmptyPositions(ArrayList<sudokuPosition> row,
+		ArrayList<sudokuPosition> col, ArrayList<sudokuPosition> SmallBlocks) {
 		Set<sudokuPosition> SPSet = new HashSet<sudokuPosition>();
-		for (sudokuPosition spTemp: temp) {
+		for (sudokuPosition spTemp: row) {
 			if (!spTemp.containsValue) {
-				count++;
+				SPSet.add(spTemp);
 			}
 		}
-		return count;
+		for (sudokuPosition spTemp: col) {
+			if (!spTemp.containsValue) {
+				SPSet.add(spTemp);
+			}
+		}
+		for (sudokuPosition spTemp: SmallBlocks) {
+			if (!spTemp.containsValue) {
+				SPSet.add(spTemp);
+			}
+		}
+		return SPSet.size();
 	}
 
 	public void removeValueFrom(ArrayList<sudokuPosition> temp, int val) {
