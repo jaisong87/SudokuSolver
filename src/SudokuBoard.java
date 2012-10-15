@@ -11,7 +11,6 @@ public class SudokuBoard {
 
 	//Board Size
 	public static int size;
-
 	
 	public sudokuPosition[][] board;//Store Board Configuration
 	

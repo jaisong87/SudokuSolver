@@ -46,17 +46,30 @@ public class sudokuPosition {
 	public static class PositionComparator implements Comparator<sudokuPosition> {
 		
 		public int compare(sudokuPosition o1, sudokuPosition o2) {
-			if (run == 1)
-			  return 0;
+			if (run == 1) {
+				return 0;
+			}
 			if (run == 2 || run == 3 || run == 4) {
-				if(o1.possibleValues.size() > o1.possibleValues.size()) {
-					return 1;
+				if(o2.possibleValues.size() > o1.possibleValues.size()) {
+					return -1;
 				}
 				else {
-					if(o1.possibleValues.size() < o1.possibleValues.size())
-						return -1;
-					else
-						return (o1.counter < o2.counter ? -1 : (o1.counter == o2.counter?0:1));
+					if(o2.possibleValues.size() < o1.possibleValues.size()) {
+						return 1;
+					}
+					else{
+						if (o1.counter > o2.counter) {
+							return -1;
+						}
+						else {
+							if (o1.counter == o2.counter) {
+								return 0;
+							}
+							else {
+								return 1;
+							}
+						}
+					}
 				}
 			}
 			return 0;

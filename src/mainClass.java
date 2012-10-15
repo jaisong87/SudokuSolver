@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 public class mainClass {
@@ -11,7 +12,7 @@ public class mainClass {
 	 * The below variable decides which is the run that is needed
 	 * Values:
 	 *  1. Backtracking
-	 *  2. Backtracking + MRV hueristics
+	 *  2. Backtracking + MRV heuristics
 	 *  3. Backtracking + MRV + Forward Checking
 	 *  4. Backtracking + MRV + Constraint Propagation
 	 */
@@ -21,6 +22,18 @@ public class mainClass {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		switch(run) {
+		  case 1: System.out.println("Running Backtracking");
+		    break;
+		  case 2: System.out.println("Running Backtracking + MRV heuristics");	
+		  	break;
+		  case 3: System.out.println("Running Backtracking + MRV + Forward Checking"); 
+		    break;
+		  case 4: System.out.println("Running Backtracking + MRV + Constraint Propagation"); 
+		    break;
+		  default:System.out.println("'run' value invalid"); System.exit(0); 
+		}
 		
 		ArrayList<String> inputBoard = new ArrayList<String>();
 		
@@ -50,7 +63,6 @@ public class mainClass {
 		}
 		
 		
-		System.out.println("popCounter=");
 		
 		//The DFS operation starts here:
 		Stack<SudokuBoard> SBStack = new Stack<SudokuBoard>();
@@ -63,6 +75,7 @@ public class mainClass {
 			popCounter++;
 			//temp.PrintBoard();
 			
+			
 			if (temp.isGoalState()) {
 				temp.PrintBoard();
 				System.out.println("popCounter=" +popCounter);
@@ -71,13 +84,14 @@ public class mainClass {
 			}
 			else {
 				ArrayList<SudokuBoard> successors = temp.Successor(); 
+				Collections.reverse(successors);
+				
 				for (SudokuBoard i: successors) {
 					//forward checking value is always set to true when (run != 3)
-					if (i.forwardCheckingSuccess) 
-					   SBStack.push(i);
-					else {
-						System.out.println("ForwardChecking failed for a node");
+					if (i.forwardCheckingSuccess) {
+						SBStack.push(i);
 					}
+
 				}
 			}
 		}
