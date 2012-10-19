@@ -23,7 +23,8 @@ public class SudokuBoard {
 	 * Hence if the PriorityQueue is empty then the goal state is reached.
 	 */
 	PriorityQueue<sudokuPosition> queue;
-
+	ArrayList<sudokuPosition> ordinaryqueue;
+	
 	/*
 	 * The below ArrayLists contain the objects of the sudokuPosition class, row-wise
 	 * Col-wise and Small Blocks
@@ -59,6 +60,7 @@ public class SudokuBoard {
 		SudokuBoard.M = M;
 		SudokuBoard.K = K;
 		SudokuBoard.run = run;
+		
 		
 		//Initializing the in
 		board = new sudokuPosition[SudokuBoard.size][SudokuBoard.size];
@@ -130,15 +132,25 @@ public class SudokuBoard {
 			}
 		}
 		
-		//Update the counter value for all the sudokuPosition Objects
-		for (int i=0; i < SudokuBoard.size; i++) {
-			for (int j=0; j < SudokuBoard.size; j++) {
-				sudokuPosition tmp = board[i][j];
-				if (!tmp.containsValue) {
-					tmp.counter = CountEmptyPositions(Rows.get(tmp.x),Cols.get(tmp.y), 
-							SmallBlocks.get(returnSmallSquareIndex(tmp.x, tmp.y))) - 1; //the -1 if for removing self
+		if (run != 1) {
+			//Update the counter value for all the sudokuPosition Objects
+			for (int i=0; i < SudokuBoard.size; i++) {
+				for (int j=0; j < SudokuBoard.size; j++) {
+					sudokuPosition tmp = board[i][j];
+					if (!tmp.containsValue) {
+						tmp.counter = CountEmptyPositions(Rows.get(tmp.x),Cols.get(tmp.y), 
+								SmallBlocks.get(returnSmallSquareIndex(tmp.x, tmp.y))) - 1; //the -1 if for removing self
+					}
 				}
 			}
+		}
+		
+		//Now that the counter values have been updated its time to put in the priority queue
+
+		Comparator<sudokuPosition> comp = new sudokuPosition.PositionComparator();
+		queue = new PriorityQueue<sudokuPosition>(10, comp);
+		for (sudokuPosition t: tempqueue){
+			queue.add(t);
 		}
 		
 		//Initializing the value for forward Checking
@@ -146,12 +158,18 @@ public class SudokuBoard {
 		if (run == 3)
 			this.forwardCheckingSuccess = ForwardCheckingTest();
 		
-		
-		//Now that the counter values have been updated its time to re-prioritize the queue
-		Comparator<sudokuPosition> comp = new sudokuPosition.PositionComparator();
-		queue = new PriorityQueue<sudokuPosition>(10, comp);
-		for (sudokuPosition t: tempqueue)
-			queue.add(t);
+		//Constraint propagation
+		if (run == 4) {
+			
+			if (!queue.isEmpty() && queue.peek().possibleValues.size() == 1) {
+				sudokuPosition top = queue.poll();
+				SudokuBoard t = new SudokuBoard(convertBoardtoString(top.x, top.y, top.possibleValues.get(0)));
+				board = t.board;
+				Cols = t.Cols;
+				Rows = t.Rows;
+				SmallBlocks = t.SmallBlocks;
+			}
+		}
 		
 	}
 		
@@ -174,16 +192,6 @@ public class SudokuBoard {
 		}
 		return successors;
 	}
-	
-	/*
-	 * The Successor method returns the sudokuPosition at the top of the priority queue
-	 */
-	public sudokuPosition SuccessorForRecusion() {
-		
-		sudokuPosition top = queue.poll();
-		return top;
-	}
-	
 	
 	/*
 	 * This function is for converting the board configuration back into ArrayList<String>. This method is helping 
@@ -224,10 +232,12 @@ public class SudokuBoard {
 	 * The goal state function
 	 */
 	public boolean isGoalState() {
+
 		if (queue.isEmpty())
 			return true;
 		else
 			return false;
+
 	}
 	
 	

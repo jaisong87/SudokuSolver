@@ -16,7 +16,7 @@ public class mainClass {
 	 *  3. Backtracking + MRV + Forward Checking
 	 *  4. Backtracking + MRV + Constraint Propagation
 	 */
-	public static int run=1;
+	public static int run=4;
 	
 	/*
 	 * Recursive DFS
@@ -100,7 +100,6 @@ public class mainClass {
 			//System.out.println("popCounter=" +popCounter);
 			popCounter++;
 			//temp.PrintBoard();
-			
 			
 			if (temp.isGoalState()) {
 				temp.PrintBoard();
