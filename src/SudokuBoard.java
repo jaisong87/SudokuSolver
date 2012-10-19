@@ -63,13 +63,14 @@ public class SudokuBoard {
 		//Initializing the in
 		board = new sudokuPosition[SudokuBoard.size][SudokuBoard.size];
 		
-		Comparator<sudokuPosition> comp = new sudokuPosition.PositionComparator();
-		queue = new PriorityQueue<sudokuPosition>(10, comp);
+		
 		
 		Rows = new ArrayList<ArrayList<sudokuPosition>>();
 		Cols = new ArrayList<ArrayList<sudokuPosition>>();
 		SmallBlocks = new ArrayList<ArrayList<sudokuPosition>>();
 		
+		
+		ArrayList<sudokuPosition> tempqueue = new ArrayList<sudokuPosition>();
 		
 		//Initializing the Rows/Cols/Squares
 		for (int count=0; count < SudokuBoard.size; count++) {
@@ -96,7 +97,7 @@ public class SudokuBoard {
 					Rows.get(row).add(SP);
 					Cols.get(col).add(SP);
 					SmallBlocks.get(returnSmallSquareIndex(row, col)).add(SP);
-					queue.add(SP);
+					tempqueue.add(SP);
 				}
 				else {
 					List<Integer> possibleValues = new ArrayList<Integer>();
@@ -146,6 +147,12 @@ public class SudokuBoard {
 			this.forwardCheckingSuccess = ForwardCheckingTest();
 		
 		
+		//Now that the counter values have been updated its time to re-prioritize the queue
+		Comparator<sudokuPosition> comp = new sudokuPosition.PositionComparator();
+		queue = new PriorityQueue<sudokuPosition>(10, comp);
+		for (sudokuPosition t: tempqueue)
+			queue.add(t);
+		
 	}
 		
 	
@@ -167,6 +174,16 @@ public class SudokuBoard {
 		}
 		return successors;
 	}
+	
+	/*
+	 * The Successor method returns the sudokuPosition at the top of the priority queue
+	 */
+	public sudokuPosition SuccessorForRecusion() {
+		
+		sudokuPosition top = queue.poll();
+		return top;
+	}
+	
 	
 	/*
 	 * This function is for converting the board configuration back into ArrayList<String>. This method is helping 
@@ -278,7 +295,39 @@ public class SudokuBoard {
 			spTemp.remove(val);
 		}
 	}
-		
+	
+	public void removeValueFromTogether(ArrayList<sudokuPosition> temp1,
+			ArrayList<sudokuPosition> temp2, ArrayList<sudokuPosition> temp3, int val) {
+		for (sudokuPosition spTemp: temp1) {
+			spTemp.remove(val);
+		}
+		for (sudokuPosition spTemp: temp2) {
+			spTemp.remove(val);
+		}
+		for (sudokuPosition spTemp: temp3) {
+			spTemp.remove(val);
+		}
+	}
+	
+	public void addValueTo(ArrayList<sudokuPosition> temp, int val) {
+		for (sudokuPosition spTemp: temp) {
+			spTemp.add(val);
+		}
+	}
+	
+	public void addValueToTogether(ArrayList<sudokuPosition> temp1,
+			ArrayList<sudokuPosition> temp2, ArrayList<sudokuPosition> temp3, int val) {
+		for (sudokuPosition spTemp: temp1) {
+			spTemp.add(val);
+		}
+		for (sudokuPosition spTemp: temp2) {
+			spTemp.add(val);
+		}
+		for (sudokuPosition spTemp: temp3) {
+			spTemp.add(val);
+		}
+	}
+	
 	public int returnSmallSquareIndex(int row, int col) {
 		return (row/SudokuBoard.M)*(SudokuBoard.size/SudokuBoard.K) + col/SudokuBoard.K;
 	}

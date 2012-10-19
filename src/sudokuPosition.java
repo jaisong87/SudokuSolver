@@ -82,6 +82,12 @@ public class sudokuPosition {
 		}		
 	}
 	
+	public void add(Integer e) {
+		if (!possibleValues.contains(e)) {
+			possibleValues.add(e);
+		}		
+	}
+	
 	/*
 	 * The equals and Hashcode are for Set Comparison	
 	 * @see java.lang.Object#equals(java.lang.Object)

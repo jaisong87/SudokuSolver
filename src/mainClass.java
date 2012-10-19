@@ -18,6 +18,32 @@ public class mainClass {
 	 */
 	public static int run=1;
 	
+	/*
+	 * Recursive DFS
+	 */
+	
+	public void evaluate(SudokuBoard currentBoard) {
+		
+		if (currentBoard.isGoalState()) {
+			currentBoard.PrintBoard();
+			return;
+		}
+		
+		sudokuPosition top = currentBoard.queue.poll();
+		top.containsValue = true;
+		for (int val: top.possibleValues) {
+			top.value = val;
+			top.remove(val);
+			currentBoard.removeValueFromTogether(currentBoard.Rows.get(top.x), 
+					currentBoard.Cols.get(top.y), 
+					currentBoard.SmallBlocks.get(currentBoard.returnSmallSquareIndex(top.x, top.y)), val);
+			//change counter values for everyone and reprioritize queue
+			
+			
+			
+		}
+		
+	}
 	
 	
 	public static void main(String[] args) {
