@@ -19,7 +19,7 @@ public class mainClass {
 	public static int run=4;
 	
 	/*
-	 * Recursive DFS
+	 * Recursive DFS. This function is only partially done because it is never used.
 	 */
 	
 	public void evaluate(SudokuBoard currentBoard) {
@@ -38,9 +38,7 @@ public class mainClass {
 					currentBoard.Cols.get(top.y), 
 					currentBoard.SmallBlocks.get(currentBoard.returnSmallSquareIndex(top.x, top.y)), val);
 			//change counter values for everyone and reprioritize queue
-			
-			
-			
+			//stopped coding this function because I found better ways 
 		}
 		
 	}

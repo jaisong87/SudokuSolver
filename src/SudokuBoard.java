@@ -218,7 +218,6 @@ public class SudokuBoard {
 		return returnList;
 	}
 	
-	
 	public boolean ForwardCheckingTest() {
 		Iterator<sudokuPosition> myIter = queue.iterator();
 		while (myIter.hasNext()) {
@@ -239,8 +238,6 @@ public class SudokuBoard {
 			return false;
 
 	}
-	
-	
 	
 	/*
 	 * The below functions prints the board
@@ -306,6 +303,22 @@ public class SudokuBoard {
 		}
 	}
 	
+	public void addValueTo(ArrayList<sudokuPosition> temp, int val) {
+		for (sudokuPosition spTemp: temp) {
+			spTemp.add(val);
+		}
+	}
+	
+	
+	public int returnSmallSquareIndex(int row, int col) {
+		return (row/SudokuBoard.M)*(SudokuBoard.size/SudokuBoard.K) + col/SudokuBoard.K;
+	}
+
+
+	/*
+	 * All functions below this are never used
+	 * NOT USED
+	 */
 	public void removeValueFromTogether(ArrayList<sudokuPosition> temp1,
 			ArrayList<sudokuPosition> temp2, ArrayList<sudokuPosition> temp3, int val) {
 		for (sudokuPosition spTemp: temp1) {
@@ -318,13 +331,10 @@ public class SudokuBoard {
 			spTemp.remove(val);
 		}
 	}
-	
-	public void addValueTo(ArrayList<sudokuPosition> temp, int val) {
-		for (sudokuPosition spTemp: temp) {
-			spTemp.add(val);
-		}
-	}
-	
+
+	/*
+	 * NOT USED
+	 */
 	public void addValueToTogether(ArrayList<sudokuPosition> temp1,
 			ArrayList<sudokuPosition> temp2, ArrayList<sudokuPosition> temp3, int val) {
 		for (sudokuPosition spTemp: temp1) {
@@ -336,10 +346,6 @@ public class SudokuBoard {
 		for (sudokuPosition spTemp: temp3) {
 			spTemp.add(val);
 		}
-	}
-	
-	public int returnSmallSquareIndex(int row, int col) {
-		return (row/SudokuBoard.M)*(SudokuBoard.size/SudokuBoard.K) + col/SudokuBoard.K;
 	}
 	
 }
