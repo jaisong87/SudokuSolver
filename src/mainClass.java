@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
+import java.text.NumberFormat;
 
 public class mainClass {
 
@@ -16,7 +17,7 @@ public class mainClass {
 	 *  3. Backtracking + MRV + Forward Checking
 	 *  4. Backtracking + MRV + Constraint Propagation
 	 */
-	public static int run=4;
+	public static int run=1;
 	
 	/*
 	 * Recursive DFS. This function is only partially done because it is never used.
@@ -46,6 +47,15 @@ public class mainClass {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		if (args.length != 1) {
+			System.out.println("Usage: java -jar <jarfile> <[1-4]> '<' inputfile ");
+			System.out.println("The 1-4 is for-> 1:Backtracking 2:Backtracking + MRV " +
+					"3:Backtracking + MRV + Forward Checking 4:Backtracking + MRV + Constraint Propagation");
+			System.exit(0);
+		}
+		
+		run = Integer.parseInt(args[0]);
 		
 		switch(run) {
 		  case 1: System.out.println("Running Backtracking");
@@ -101,9 +111,9 @@ public class mainClass {
 			
 			if (temp.isGoalState()) {
 				temp.PrintBoard();
-				System.out.println("popCounter=" +popCounter);
+				System.out.println("Nodes Expanded = " +popCounter);
 				flagPathFound = 1;
-				System.exit(0);//If you remove this line then all the possible paths will be found 
+				SBStack.clear();//If you remove this line then all the possible paths will be found 
 			}
 			else {
 				ArrayList<SudokuBoard> successors = temp.Successor(); 
@@ -121,6 +131,24 @@ public class mainClass {
 		if (flagPathFound == 0) {
 			System.out.println("No end state could be found");
 		}
+		
+		
+		Runtime runtime = Runtime.getRuntime();
+	    NumberFormat format = NumberFormat.getInstance();
+
+	    StringBuilder sb = new StringBuilder();
+	    long maxMemory = runtime.maxMemory();
+	    long allocatedMemory = runtime.totalMemory();
+	    long freeMemory = runtime.freeMemory();
+
+	    sb.append("used memory: " + format.format((allocatedMemory-freeMemory) / 1024) + "KB\n");
+	    sb.append("free memory: " + format.format(freeMemory / 1024) + "KB\n");
+	    sb.append("allocated memory: " + format.format(allocatedMemory / 1024) + "KB\n");
+	    sb.append("max memory: " + format.format(maxMemory / 1024) + "KB\n");
+	    sb.append("total free memory: " + format.format((freeMemory + (maxMemory - allocatedMemory)) / 1024) + "KB\n");
+	    System.out.println("------ Stats on memory usage (including JVM) ------ KB\n"+sb);
+		
+		
 
 	}
 
