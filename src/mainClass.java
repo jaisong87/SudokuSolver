@@ -90,7 +90,7 @@ public class mainClass {
 				inputBoard.add(input);
 			}
 
-			SB = new SudokuBoard(inputBoard, BoardSize, M, K, run);	
+			SB = new SudokuBoard(inputBoard, BoardSize, M, K, run, 0);	
 									
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -112,6 +112,7 @@ public class mainClass {
 			if (temp.isGoalState()) {
 				temp.PrintBoard();
 				System.out.println("Nodes Expanded = " +popCounter);
+				System.out.println("Constraint checks = " + temp.constraintChecks);
 				flagPathFound = 1;
 				SBStack.clear();//If you remove this line then all the possible paths will be found 
 			}

@@ -50,11 +50,18 @@ public class SudokuBoard {
 	 */
 	public boolean forwardCheckingSuccess;
 	
+	
+	/*
+	 * Constraint checking variable
+	 */
+	public int constraintChecks=0;
+	
+	
 	/*
 	 * This constructor is used for initialization. Called from 
 	 * the mainclass and by the successor function.
 	 */
-	SudokuBoard(ArrayList<String> inputBoard, int BoardSize, int M, int K, int run){		
+	SudokuBoard(ArrayList<String> inputBoard, int BoardSize, int M, int K, int run, int constraintChecks){		
 
 		SudokuBoard.size = BoardSize;
 		SudokuBoard.M = M;
@@ -65,7 +72,7 @@ public class SudokuBoard {
 		//Initializing the in
 		board = new sudokuPosition[SudokuBoard.size][SudokuBoard.size];
 		
-		
+		this.constraintChecks = constraintChecks;
 		
 		Rows = new ArrayList<ArrayList<sudokuPosition>>();
 		Cols = new ArrayList<ArrayList<sudokuPosition>>();
@@ -163,11 +170,12 @@ public class SudokuBoard {
 			
 			if (!queue.isEmpty() && queue.peek().possibleValues.size() == 1) {
 				sudokuPosition top = queue.poll();
-				SudokuBoard t = new SudokuBoard(convertBoardtoString(top.x, top.y, top.possibleValues.get(0)));
+				SudokuBoard t = new SudokuBoard(convertBoardtoString(top.x, top.y, top.possibleValues.get(0)), constraintChecks);
 				board = t.board;
 				Cols = t.Cols;
 				Rows = t.Rows;
 				SmallBlocks = t.SmallBlocks;
+				this.constraintChecks += 3*size - K - M -1;
 			}
 		}
 		
@@ -177,8 +185,8 @@ public class SudokuBoard {
 	/*
 	 * This constructor is used by the Successor function
 	 */
-	SudokuBoard(ArrayList<String> inputBoard){
-		this(inputBoard, SudokuBoard.size, SudokuBoard.M, SudokuBoard.K, SudokuBoard.run);
+	SudokuBoard(ArrayList<String> inputBoard, int ConstraintChecks){
+		this(inputBoard, SudokuBoard.size, SudokuBoard.M, SudokuBoard.K, SudokuBoard.run, ConstraintChecks);
 	}
 	
 	/*
@@ -188,7 +196,7 @@ public class SudokuBoard {
 		ArrayList<SudokuBoard> successors = new ArrayList<SudokuBoard>();
 		sudokuPosition top = queue.poll();
 		for (int nextPossibleValue: top.possibleValues) {
-			successors.add(new SudokuBoard(convertBoardtoString(top.x, top.y, nextPossibleValue)));
+			successors.add(new SudokuBoard(convertBoardtoString(top.x, top.y, nextPossibleValue), constraintChecks));
 		}
 		return successors;
 	}
